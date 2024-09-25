@@ -1,0 +1,79 @@
+﻿@model List<RealEstate_Dapper_UI.Dtos.PopularLocationDtos.ResultPopularLocationDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Admin/Index.cshtml";
+    int count = 0;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popüler Lokasyonlar Listesi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6">Popüler Lokasyonlar Listesi</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">#</th>
+                                <th class="py-3 px-6 text-left">Şehir Adı</th>
+                                <th class="py-3 px-6 text-center">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-600 text-sm font-light">
+                            @foreach (var item in Model)
+                            {
+                                count++;
+                                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                                        <span class="font-medium">@count</span>
+                                    </td>
+                                    <td class="py-3 px-6 text-left">
+                                        <div class="flex items-center">
+                                            <div class="mr-2">
+                                                <img class="w-10 h-10 rounded-full object-cover" src="@item.ImageUrl" alt="@item.CityName">
+                                            </div>
+                                            <span>@item.CityName</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <div class="flex item-center justify-center">
+                                            <a href="/PopularLocation/UpdatePopularLocation/@item.LocationID" class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button onclick="confirmDelete(@item.LocationID, '@item.CityName')" class="w-4 mr-2 transform hover:text-red-500 hover:scale-110">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6">
+                    <a href="/PopularLocation/CreatePopularLocation/" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                        <i class="fas fa-plus mr-2"></i>Yeni Lokasyon Girişi
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmDelete(id, cityName) {
+            if (confirm(`"${cityName}" şehrini silmek istediğinize emin misiniz?`)) {
+                window.location.href = `/PopularLocation/DeletePopularLocation/${id}`;
+            }
+        }
+    </script>
+</body>
+</html>

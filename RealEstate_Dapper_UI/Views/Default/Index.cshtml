@@ -1,0 +1,73 @@
+﻿@model List<ResultCategoryDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_DefaultLayout.cshtml";
+}
+
+<section class="w3l-cover-3" style="background: linear-gradient(135deg, #1c1c1c, #292929); color: white;">
+    <div class="cover top-bottom">
+        <div class="container">
+            <div class="middle-section text-center">
+                <div class="section-width">
+                    <p style="font-size: 1.5rem; color: #f9f9f9;">Hayalinizdeki Eve Sahip Olun!</p>
+                    <h2 style="font-size: 3rem; font-weight: bold; color: #ffd700;">Bugün Sizin İçin Doğru Evi Bulalım</h2>
+                    <div class="most-searches">
+                        <h4 style="font-size: 1.8rem; margin-bottom: 20px; color: #ff9800;">Sık Arananlar</h4>
+                        <ul style="display: flex; justify-content: center; gap: 20px; list-style: none;">
+                            <li><a href="#link" style="color: #f9f9f9; font-weight: bold; text-transform: uppercase;">Villa</a></li>
+                            <li><a href="#link" style="color: #f9f9f9; font-weight: bold; text-transform: uppercase;">Daire</a></li>
+                            <li><a href="#link" style="color: #f9f9f9; font-weight: bold; text-transform: uppercase;">Yazlık</a></li>
+                        </ul>
+                    </div>
+                    <form asp-action="PartialSearch" asp-controller="Default" class="w3l-cover-3-gd" method="post" style="margin-top: 30px;">
+                        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                            <input type="search" name="searchKeyValue" placeholder="Anahtar kelimeyi girin" required style="padding: 15px; width: 300px; border: 1px solid #ccc; border-radius: 30px; background-color: #fff; font-size: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+
+                            <select class="btn btn-default" name="propertyCategoryId" required style="padding: 15px; width: 220px; border-radius: 30px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                <option selected="">Gayrimenkul Türü</option>
+                                @foreach (var item in Model)
+                                {
+                                    <option value="@item.CategoryID">@item.CategoryName</option>
+                                }
+                            </select>
+
+                            <select class="btn btn-default" name="city" required style="padding: 15px; width: 220px; border-radius: 30px; border: 1px solid #ccc; font-size: 1rem; background-color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                <option selected="">Şehir Seçiniz</option>
+                                <option>İstanbul</option>
+                                <option>Paris</option>
+                                <option>Milano</option>
+                                <option>Roma</option>
+                                <option>Lyon</option>
+                                <option>Münih</option>
+                                <option>Berlin</option>
+                                <option>Sofya</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="padding: 15px 40px; margin-top: 20px; border: none; background: #ff9800; color: white; border-radius: 30px; font-size: 1.2rem; box-shadow: 0 6px 15px rgba(0,0,0,0.2); transition: background 0.3s ease;">
+                            Ara
+                        </button>
+                    </form>
+                </div>
+                <section id="bottom" class="demo" style="margin-top: 40px;">
+                    <a href="#bottom" style="text-decoration: none; color: #ffd700; font-size: 1.5rem;">
+                        <span></span>İlan Listesi
+                    </a>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@await Component.InvokeAsync("_DefaultHomePageProductList")
+@await Component.InvokeAsync("_DefaultWhoWeAreComponentPartial")
+@await Component.InvokeAsync("_DefaultBottomGridComponentPartial")
+@await Component.InvokeAsync("_DefaultProductListExploreCitiesComponentPartial")
+@await Component.InvokeAsync("_DefaultOurTestimonialComponentPartial")
+@await Component.InvokeAsync("_DefaultSubFeatureComponentPartial")
+@await Component.InvokeAsync("_DefaultDiscountOfDayComponentPartial")
+@await Component.InvokeAsync("_DefaultBrandComponentPartial")
+@await Component.InvokeAsync("_DefaultScriptComponentPartial")

@@ -1,0 +1,113 @@
+﻿@model List<ResultEstateAgentDashboardChartDto>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Şık ve Modern Grafik Tasarımı</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .chart-box {
+            width: 45%;
+            background: #fff; /* Grafiklerin arka planı beyaz */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge efekti */
+            position: relative;
+        }
+
+            .chart-box canvas {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+
+        .chart-title {
+            font-size: 1.5em;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        /* Ekleme: Grafik üzerinde hover efekti */
+        .chart-box:hover {
+            transform: scale(1.02);
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chart-container">
+        <div class="chart-box">
+            <div class="chart-title">Şehir Bazlı İlan Dağılımı</div>
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="chart-box">
+            <div class="chart-title">İlan Miktarına Göre Şehirler</div>
+            <canvas id="myChart1"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const xValuesChart1 = @Html.Raw(Json.Serialize(Model.Select(item => item.City)));
+        const yValuesChart1 = @Html.Raw(Json.Serialize(Model.Select(item => item.CityCount)));
+        const barColors = ["#e74c3c", "#9b59b6", "#f1c40f", "#3498db", "#2ecc71"];
+
+        const configChart1 = {
+            type: 'bar',
+            data: {
+                labels: xValuesChart1,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValuesChart1,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#555' } },
+                    y: { grid: { color: '#ddd' }, ticks: { color: '#555' } }
+                }
+            }
+        };
+
+        const configChart2 = {
+            type: 'bar',
+            data: {
+                labels: xValuesChart1,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValuesChart1,
+                    borderRadius: 5,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    x: { grid: { display: false }, ticks: { color: '#555' } },
+                    y: { grid: { color: '#ddd' }, ticks: { color: '#555' } }
+                }
+            }
+        };
+
+        new Chart(document.getElementById('myChart'), configChart1);
+        new Chart(document.getElementById('myChart1'), configChart2);
+    </script>
+
+</body>
+</html>
